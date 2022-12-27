@@ -1,12 +1,15 @@
 const express = require('express')
 var cors = require('cors')
-const connectToMongo=require('./db');
+const dotenv = require("dotenv");
+const connectToMongo = require('./db');
 
+
+
+dotenv.config()
 
 connectToMongo();
-const app = express()
+const app = express();
 const port = process.env.PORT || 5000;
-
 
 
 app.use(cors())
@@ -16,10 +19,17 @@ app.use(express.json())
 //   res.send('Hello Deepak!')
 // })
 
-// Available Routes
-app.use('/api/auth',require('./routes/auth'))
-app.use('/api/notes',require('./routes/notes'))
 
+// Available Routes
+app.use('/api/auth', require('./routes/auth'))
+app.use('/api/notes', require('./routes/notes'))
+
+app.get('/', (res, req) => {
+  req.send("Welcome to my app")
+
+})
+
+// hosting on heroku
 
 
 app.listen(port, () => {
